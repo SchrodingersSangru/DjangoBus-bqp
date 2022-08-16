@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from .models import user
@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,
-            validators=[UniqueValidator(queryset=User.objects.all())]
+            validators=[UniqueValidator(queryset=user.objects.all())]
             )
 
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -45,7 +45,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = User.objects.create(
+        user = user.objects.create(
 
             username=validated_data['username'],
             email=validated_data['email'],
@@ -68,7 +68,7 @@ class ViewUserSerializer(serializers.ModelSerializer):
     # password = serializers.CharField()
     is_superuser = serializers.CharField()
     class Meta:
-        model = User 
+        model =user 
         fields = ('username', 'email', 'first_name', 'last_name', 'is_superuser')
         
         
@@ -122,7 +122,7 @@ class UserLogoutSerializer(serializers.Serializer):
 
 
 from rest_framework import serializers
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 class ChangePasswordSerializer(serializers.Serializer):
     model = user
