@@ -28,18 +28,15 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
 
-    company_name = serializers.CharField(write_only=True, required=True)
-    is_superuser = serializers.BooleanField(default= False)
+    
+    is_user = serializers.BooleanField(default= True)
+    is_manager = serializers.BooleanField(default= False)
     
     class Meta:
-        model = User
-        #fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
-        fields = ['username', 'email', 'is_superuser', 'company_name', 'password', 'password2', 'first_name', 'last_name', 'is_user', 'is_manager']
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': False},
-            # 'is_superuser': {'required': True},
-        }
+        model = user
+        fields = ['username', 'email', 'password', 'password2', 'is_user', 'is_manager', 'first_name', 'last_name', 'age', 'sex', 'address']
+        
+        
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
